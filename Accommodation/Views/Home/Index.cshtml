@@ -1,0 +1,155 @@
+﻿@model Accommodation.ViewModels.AccomodationsViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<link href="~/Content/readMore.css" rel="stylesheet" />
+<link href="~/Content/item.css" rel="stylesheet" />
+<link href="~/Content/effects.css" rel="stylesheet" />
+<link href="~/Content/uploadForm.css" rel="stylesheet" />
+<div class="container">
+
+    <div id="overlay" class="web_dialog_overlay"></div>
+    @if (Request.IsAuthenticated)
+    {
+        <div id="dialog" class="web_dialog">
+            @using (Html.BeginForm("Create", "Accomodations", FormMethod.Post, new { enctype = "multipart/form-data" }))//, new { id = "logoutForm", @class = "navbar-right" }
+            {
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                    <h4>Accomodation</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(Model => Model.Accomodation.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(Model => Model.Accomodation.Price, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.Price, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.StreetAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(Model => Model.Accomodation.StreetAddress, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.StreetAddress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.City, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(Model => Model.Accomodation.City, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.City, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.PostalCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(Model => Model.Accomodation.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.PostalCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.image, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(Model => Model.Accomodation.image, new { type = "file", accept = "image/*" })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.image, "", new { @class = "text-danger" })
+
+                        </div>
+                       
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.RentSale, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EnumDropDownListFor(Model => Model.Accomodation.RentSale, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.RentSale, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(Model => Model.Accomodation.Types, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EnumDropDownListFor(Model => Model.Accomodation.Types, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.Accomodation.Types, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="nav-left">
+            <div class="btn"></div>
+            <div class="icon-bg">
+                <div class="icon">@*OVA E ZA KOPCETO ZA UPLOAD FORMATA*@</div>
+            </div>
+        </div>
+    }
+
+    <div class="apartment_wrapper">
+        @foreach (var item in Model.Accomodations)
+        {
+
+
+            <div class="accom_form">
+                <div class="span3 property-item property-for-rent ">
+
+                    <div class="box effect5 ">
+                        <div class="view view-first">
+                            <div class="info-1">
+                                <div class="for-rent">
+                                    @Html.DisplayFor(modelItem => item.RentSale)
+                                </div>
+
+                                <div class="price">
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </div>
+                            </div>
+
+                            <img alt="" src="@Html.DisplayFor(modelItem => item.image)" class="img-hover" style="display: inline;">@*@Html.DisplayFor(modelItem => item.ImgUrl)*@
+                  
+                        </div>
+                        <div class="info">
+                            <h4>@Html.DisplayFor(modelItem => item.StreetAddress)</h4>
+                            @Html.DisplayFor(modelItem => item.City), @Html.DisplayFor(modelItem => item.PostalCode)
+                            <div class="features">
+                                <span class="area">@Html.DisplayFor(modelItem => item.Types)</span>
+                                <span class="bath">2</span>
+                                <span class="bed">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<a href="#" id="show-more">
+                        <div class="arrow bounce"> </div>
+                    </a>*@
+
+            </div>
+        }
+    </div>
+
+
+
+</div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="~/Scripts/showMore.js"></script>
+<script src="~/Scripts/uploadForm.js"></script>

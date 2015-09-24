@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Accommodation.Models.Entities.Accomodation>
+
+@{
+    ViewBag.Title = "Rent";
+}
+<link href="~/Content/index.css" rel="stylesheet" />
+<link href="~/Content/item.css" rel="stylesheet" />
+
+
+<p>
+    @using (Html.BeginForm("Rent", "Home", FormMethod.Get))
+            {
+
+        <b>Search By:</b> @Html.RadioButton("searchBy", "City", true)<text>City</text>
+        @Html.RadioButton("searchBy", "StreetAddress")<text>Street Address</text>
+        @Html.RadioButton("searchBy", "Appartment")<text>Appartment</text>
+        @Html.RadioButton("searchBy", "House")<text>House</text>
+        @Html.RadioButton("searchBy", "Villa")<text>Villa</text>
+
+
+
+
+        @Html.TextBox("search") <input type="submit" value="Search" />
+    }
+</p>
+
+<div class="apartment_wrapper">
+    @foreach (var item in Model)
+    {
+        <div class="accom_form ">
+            <div class="span3 property-item property-for-rent ">
+
+                <div class="box effect5">
+                    <div class="view view-first">
+                        <div class="info-1">
+                            <div class="for-rent">
+                                @Html.DisplayFor(modelItem => item.RentSale)
+                            </div>
+
+                            <div class="price">
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </div>
+                        </div>
+
+                        <img  alt="" src="@Html.DisplayFor(modelItem => item.image)" class="img-hover" style="display: inline;">
+                        <div class="mask">
+                            <h2>Hover Style #1</h2>
+                            
+                        </div>
+                    </div>
+                    <div class="info">
+                        <h4>@Html.DisplayFor(modelItem => item.StreetAddress)</h4>
+                        @Html.DisplayFor(modelItem => item.City),  @Html.DisplayFor(modelItem => item.PostalCode)
+                        <div class="features">
+                            <span class="area">@Html.DisplayFor(modelItem => item.Types)</span>
+                            <span class="bath">2</span>
+                            <span class="bed">2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    </div>
